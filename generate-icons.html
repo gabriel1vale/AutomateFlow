@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head><title>Generate Icons</title></head>
+<body>
+<h2>Clique nos links abaixo para baixar os icones e coloque na pasta icons/</h2>
+<canvas id="c16" width="16" height="16"></canvas>
+<canvas id="c48" width="48" height="48"></canvas>
+<canvas id="c128" width="128" height="128"></canvas>
+<br><br>
+<a id="dl16" download="icon16.png">Baixar icon16.png</a><br>
+<a id="dl48" download="icon48.png">Baixar icon48.png</a><br>
+<a id="dl128" download="icon128.png">Baixar icon128.png</a><br>
+<script>
+function drawIcon(canvas, size) {
+  const ctx = canvas.getContext('2d');
+  const r = size / 8;
+
+  // Background rounded rect
+  ctx.fillStyle = '#0078d4';
+  roundRect(ctx, 0, 0, size, size, r * 1.5);
+  ctx.fill();
+
+  // Draw "{ }" text
+  ctx.fillStyle = '#ffffff';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  if (size <= 16) {
+    ctx.font = 'bold ' + (size * 0.65) + 'px Consolas, monospace';
+    ctx.fillText('{}', size / 2, size / 2 + 0.5);
+  } else {
+    ctx.font = 'bold ' + (size * 0.38) + 'px Consolas, monospace';
+    ctx.fillText('{ }', size / 2, size / 2);
+
+    // Small lightning bolt (Power Automate style)
+    const cx = size * 0.5;
+    const cy = size * 0.72;
+    const s = size * 0.07;
+    ctx.fillStyle = '#ffd700';
+    ctx.beginPath();
+    ctx.moveTo(cx - s, cy - s * 2);
+    ctx.lineTo(cx + s * 0.3, cy - s * 0.2);
+    ctx.lineTo(cx - s * 0.3, cy + s * 0.2);
+    ctx.lineTo(cx + s, cy + s * 2);
+    ctx.lineTo(cx - s * 0.3, cy + s * 0.3);
+    ctx.lineTo(cx + s * 0.3, cy - s * 0.3);
+    ctx.closePath();
+    ctx.fill();
+  }
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+[[16, 'c16', 'dl16'], [48, 'c48', 'dl48'], [128, 'c128', 'dl128']].forEach(([size, cid, did]) => {
+  const canvas = document.getElementById(cid);
+  drawIcon(canvas, size);
+  document.getElementById(did).href = canvas.toDataURL('image/png');
+});
+</script>
+</body>
+</html>

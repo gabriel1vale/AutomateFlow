@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>AutomateFlow - Editor JSON</title>
+  <link rel="stylesheet" href="lib/monaco/vs/editor/editor.main.css">
+  <link rel="stylesheet" href="editor.css">
+</head>
+<body>
+  <!-- Top toolbar -->
+  <header class="toolbar">
+    <div class="toolbar-left">
+      <span class="logo">{ } AutomateFlow</span>
+      <span class="flow-name" id="flowName">Carregando...</span>
+      <span class="flow-badge" id="flowState"></span>
+    </div>
+    <div class="toolbar-center">
+      <div class="tab-bar" id="tabBar">
+        <button class="tab active" data-tab="editor">Editor</button>
+        <button class="tab" data-tab="tree">Arvore</button>
+        <button class="tab" data-tab="actions">Acoes</button>
+        <button class="tab" data-tab="diff">Diff</button>
+        <button class="tab" data-tab="visual">Visualizar</button>
+        <button class="tab" data-tab="connections">Conexoes</button>
+      </div>
+    </div>
+    <div class="toolbar-right">
+      <button class="toolbar-btn" id="btnFormat" title="Formatar JSON">&#9998; Formatar</button>
+      <button class="toolbar-btn" id="btnMinify" title="Minificar JSON">&#9472; Minificar</button>
+      <button class="toolbar-btn" id="btnValidate" title="Validar JSON">&#10003; Validar</button>
+      <div class="toolbar-separator"></div>
+      <button class="toolbar-btn" id="btnImport" title="Importar JSON">&#11014; Importar</button>
+      <button class="toolbar-btn" id="btnExport" title="Exportar JSON">&#11015; Exportar</button>
+      <button class="toolbar-btn" id="btnCopy" title="Copiar JSON">&#128203; Copiar</button>
+      <div class="toolbar-separator"></div>
+      <button class="toolbar-btn btn-save" id="btnSave" title="Salvar no Power Automate (Ctrl+S)">&#128190; Salvar</button>
+    </div>
+  </header>
+
+  <!-- Main content area -->
+  <main class="main-content">
+    <!-- Editor tab -->
+    <div class="tab-content active" id="tab-editor">
+      <div id="monacoContainer" class="monaco-container"></div>
+    </div>
+
+    <!-- Tree tab -->
+    <div class="tab-content" id="tab-tree">
+      <div class="tree-toolbar">
+        <button class="toolbar-btn" id="btnExpandAll">Expandir Tudo</button>
+        <button class="toolbar-btn" id="btnCollapseAll">Recolher Tudo</button>
+        <input type="text" id="treeFilter" placeholder="Filtrar propriedades...">
+      </div>
+      <div class="tree-view" id="treeView"></div>
+    </div>
+
+    <!-- Actions tab -->
+    <div class="tab-content" id="tab-actions">
+      <div class="actions-toolbar">
+        <select id="actionFilter">
+          <option value="all">Todas as acoes</option>
+          <option value="triggers">Triggers</option>
+          <option value="actions">Actions</option>
+          <option value="conditions">Conditions (If/Switch)</option>
+          <option value="loops">Loops (Foreach/Until)</option>
+          <option value="scopes">Scopes</option>
+        </select>
+        <input type="text" id="actionSearch" placeholder="Buscar acoes...">
+      </div>
+      <div class="actions-list" id="actionsList"></div>
+    </div>
+
+    <!-- Diff tab -->
+    <div class="tab-content" id="tab-diff">
+      <div class="diff-toolbar">
+        <span class="diff-label">Original vs. Editado</span>
+        <button class="toolbar-btn" id="btnRefreshDiff">Atualizar Diff</button>
+      </div>
+      <div id="monacoDiffContainer" class="monaco-diff-container"></div>
+    </div>
+    <!-- Visual tab -->
+    <div class="tab-content" id="tab-visual">
+      <div class="visual-toolbar">
+        <button class="toolbar-btn" id="btnZoomIn" title="Aumentar zoom">+ Zoom</button>
+        <button class="toolbar-btn" id="btnZoomOut" title="Diminuir zoom">- Zoom</button>
+        <button class="toolbar-btn" id="btnZoomReset" title="Resetar zoom">Resetar</button>
+        <button class="toolbar-btn" id="btnRefreshVisual" title="Atualizar">Atualizar</button>
+      </div>
+      <div class="visual-canvas-wrapper" id="visualCanvasWrapper">
+        <svg id="flowSvg" class="flow-svg"></svg>
+      </div>
+    </div>
+
+    <!-- Connections tab -->
+    <div class="tab-content" id="tab-connections">
+      <div class="connections-toolbar">
+        <span class="connections-label">Conexoes e Conectores do Flow</span>
+        <button class="toolbar-btn" id="btnRefreshConnections">Atualizar</button>
+      </div>
+      <div class="connections-list" id="connectionsList"></div>
+    </div>
+  </main>
+
+  <!-- Status bar -->
+  <div class="status-bar" id="statusBar">
+    <span id="statusMessage">Pronto</span>
+    <span id="statusPosition">Ln 1, Col 1</span>
+    <span id="statusSize"></span>
+    <span id="statusValidation" class="valid">JSON valido</span>
+  </div>
+
+  <!-- Toast notifications -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Import dialog -->
+  <input type="file" id="fileInput" accept=".json" style="display:none">
+
+  <!-- Monaco AMD loader + bootstrap (external files required by MV3 CSP: script-src 'self') -->
+  <script src="lib/monaco/vs/loader.js"></script>
+  <script src="editor-loader.js"></script>
+</body>
+</html>

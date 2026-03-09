@@ -1,0 +1,61 @@
+{
+  "manifest_version": 3,
+  "name": "AutomateFlow - Power Automate JSON Editor",
+  "version": "2.0.0",
+  "description": "Detecta o flow do Power Automate na aba atual e abre um editor JSON completo para visualizar, editar, exportar e importar flows.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://make.powerautomate.com/*",
+    "https://flow.microsoft.com/*",
+    "https://api.flow.microsoft.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://make.powerautomate.com/*",
+        "https://flow.microsoft.com/*"
+      ],
+      "js": ["interceptor.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://make.powerautomate.com/*",
+        "https://flow.microsoft.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_start",
+      "world": "ISOLATED"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["lib/monaco/vs/**/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

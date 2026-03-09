@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 360px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #1e1e1e;
+      color: #cccccc;
+      padding: 16px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #333;
+    }
+    .header img { width: 32px; height: 32px; }
+    .header h1 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+    .header .version {
+      font-size: 11px;
+      color: #888;
+      margin-left: auto;
+    }
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+    .status.connected { background: #0e3a1e; color: #4ec96b; }
+    .status.disconnected { background: #3a1e1e; color: #e05252; }
+    .status.waiting { background: #3a2e1e; color: #e0a852; }
+    .status.fetching { background: #1e2e3a; color: #52a8e0; }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .status.connected .status-dot { background: #4ec96b; }
+    .status.disconnected .status-dot { background: #e05252; }
+    .status.waiting .status-dot { background: #e0a852; animation: pulse 1.5s infinite; }
+    .status.fetching .status-dot { background: #52a8e0; animation: pulse 0.8s infinite; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    .flow-info {
+      background: #252526;
+      border: 1px solid #333;
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    .flow-info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+      font-size: 12px;
+    }
+    .flow-info-row .label { color: #888; }
+    .flow-info-row .value { color: #ddd; font-weight: 500; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .btn {
+      width: 100%;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn:hover { filter: brightness(1.15); }
+    .btn:active { transform: scale(0.98); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; filter: none; }
+    .btn-primary {
+      background: #0078d4;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .btn-secondary {
+      background: #333;
+      color: #ccc;
+      margin-bottom: 8px;
+    }
+    .btn-success {
+      background: #107c10;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .btn-icon { font-size: 16px; }
+    .actions { margin-top: 4px; }
+    .no-flow {
+      text-align: center;
+      padding: 16px;
+      color: #888;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .no-flow strong { color: #ccc; display: block; margin-bottom: 8px; }
+    .error-detail {
+      background: #2d1a1a;
+      border: 1px solid #5c2e2e;
+      border-radius: 4px;
+      padding: 8px;
+      margin-top: 8px;
+      font-size: 11px;
+      color: #e0a0a0;
+      word-break: break-all;
+    }
+    .debug-info {
+      background: #252526;
+      border: 1px solid #333;
+      border-radius: 4px;
+      padding: 8px;
+      margin-top: 8px;
+      font-size: 11px;
+      color: #888;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="icons/icon48.png" alt="AutomateFlow">
+    <h1>AutomateFlow</h1>
+    <span class="version">v2.0.0</span>
+  </div>
+
+  <div id="content">
+    <div id="loading" class="status waiting">
+      <div class="status-dot"></div>
+      Verificando...
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
