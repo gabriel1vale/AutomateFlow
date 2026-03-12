@@ -2,6 +2,8 @@
 
 Extensao para navegador (Chrome/Edge, Manifest V3) que detecta flows do Power Automate na aba ativa, captura a definicao JSON do flow e abre um editor alternativo completo com Monaco Editor (o mesmo editor do VS Code).
 
+![AutomateFlow Editor Preview](assets/preview.png)
+
 ## O que faz
 
 O AutomateFlow intercepta passivamente as chamadas de API feitas pelo portal do Power Automate (`make.powerautomate.com` / `flow.microsoft.com`) para capturar a definicao completa do flow. Quando a interceptacao passiva falha, ele tambem suporta busca ativa via API usando o token de autenticacao da sessao.
